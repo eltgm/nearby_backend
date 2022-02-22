@@ -1,0 +1,150 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Users API for working with rooms
+  license: #Swagger license info
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: '127.0.0.1:8080'
+tags:
+  - name: CreateRoom
+    description: Создать новую комнату
+  - name: GetRooms
+    description: Получить все комнаты по идентификатору пользователя
+  - name: EnterRoom
+    description: Войти в существующую комнату
+  - name: LeaveRoom
+    description: Выйти из комнаты
+  - name: UpdateCoordinates
+    description: Передать актуальную геопозицию и получить геопозиции остальных участников комнаты
+schemes:
+  - http
+
+paths:
+  /user/room:
+    post:
+      tags:
+        - CreateRoom
+      operationId: createRoom
+      summary: Создание комнаты для дальнейшего подключения пользователей. На вход получаем уникальный идентификатор пользователя. В ответе отдаем случайно сгенерированный идентификатор комнаты
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: userId
+          in: query
+          description: ID пользователя
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'
+    get:
+      tags:
+        - GetRooms
+      operationId: getRooms
+      summary: Полученние всех активных комнат по идентификатору участника
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: query
+          description: ID пользователя
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            minItems: 1
+            items:
+              $ref: 'common_model.yaml#/definitions/Room'
+  /user/room/{roomId}/enter:
+    get:
+      tags:
+        - EnterRoom
+      operationId: enterRoom
+      summary: Войти в существующую комнату по переданному идентификатору
+      produces:
+        - application/json
+      parameters:
+        - name: roomId
+          in: path
+          description: ID комнаты
+          required: true
+          type: string
+          format: uuid
+        - name: userId
+          in: query
+          description: ID пользователя
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'
+  /user/{roomId}/leave:
+    get:
+      tags:
+        - LeaveRoom
+      operationId: leaveRoom
+      summary: Выйти из существующей комнаты по переданному идентификатору
+      produces:
+        - application/json
+      parameters:
+        - name: roomId
+          in: path
+          description: ID комнаты
+          required: true
+          type: string
+          format: uuid
+        - name: userId
+          in: query
+          description: ID пользователя
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'
+  /user/{roomId}/update:
+    post:
+      tags:
+        - UpdateCoordinates
+      operationId: leaveRoom
+      summary: Выйти из существующей комнаты по переданному идентификатору
+      produces:
+        - application/json
+      parameters:
+        - name: roomId
+          in: path
+          description: ID комнаты
+          required: true
+          type: string
+          format: uuid
+        - name: userId
+          in: query
+          description: ID пользователя
+          required: true
+          type: string
+          format: uuid
+        - name: coordinates
+          in: body
+          description: Координаты пользователя
+          required: true
+          schema:
+            $ref: 'common_model.yaml#/definitions/Coordinates'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'

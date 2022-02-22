@@ -1,0 +1,68 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Admins API for activating/deleting rooms
+  license: #Swagger license info
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: '127.0.0.1:8080'
+tags:
+  - name: RoomActivate
+    description: Активировать созданную комнату
+  - name: RoomDelete
+    description: Удалить существующую комнату
+schemes:
+  - http
+
+paths:
+  /admin/{roomId}:
+    post:
+      tags:
+        - RoomActivate
+      operationId: roomActivate
+      summary: Активировать ранее созданную комнату
+      produces:
+        - application/json
+      parameters:
+        - name: roomId
+          in: path
+          description: ID комнаты
+          required: true
+          type: string
+          format: uuid
+        - name: userId
+          in: query
+          description: ID администратора
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'
+    delete:
+      tags:
+        - RoomDelete
+      operationId: roomDelete
+      summary: Удалить ранее созданную комнату
+      produces:
+        - application/json
+      parameters:
+        - name: roomId
+          in: path
+          description: ID комнаты
+          required: true
+          type: string
+          format: uuid
+        - name: userId
+          in: query
+          description: ID администратора
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: 'common_model.yaml#/definitions/Room'

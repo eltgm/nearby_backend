@@ -1,0 +1,56 @@
+definitions:
+  Room:
+    description: Комната
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: string
+        description: Уникальный код комнаты
+        format: uuid
+        example: '07c12c28-5f80-4db6-867b-7dd6eb5c8d63'
+      isActive:
+        type: boolean
+        description: Флаг активности комнаты
+        example: false
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+
+  User:
+    description: Пользователь
+    type: object
+    required:
+      - id
+      - isAdmin
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Уникальный идентификатор пользователя
+        example: '07c12c28-5f80-4db6-867b-7dd6eb5c8d63'
+      isAdmin:
+        type: boolean
+        description: Флаг, указывающий, является ли пользователь администратором данной комнаты
+      lastCoordinates:
+        $ref: '#/definitions/Coordinates'
+
+  Coordinates:
+    description: Координаты
+    type: object
+    required:
+      - longitude
+      - latitude
+    properties:
+      longitude:
+        type: number
+        format: double
+        description: Долгота
+        example: 37.64
+      latitude:
+        type: number
+        format: double
+        description: Широта
+        example: 55.76
