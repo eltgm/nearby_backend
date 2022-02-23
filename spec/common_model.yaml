@@ -8,7 +8,6 @@ definitions:
       id:
         type: string
         description: Уникальный код комнаты
-        format: uuid
         example: '07c12c28-5f80-4db6-867b-7dd6eb5c8d63'
       isActive:
         type: boolean
@@ -28,7 +27,6 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
         description: Уникальный идентификатор пользователя
         example: '07c12c28-5f80-4db6-867b-7dd6eb5c8d63'
       isAdmin:
@@ -54,3 +52,20 @@ definitions:
         format: double
         description: Широта
         example: 55.76
+  Error:
+    type: object
+    description: Описание ошибки для всех методов
+    properties:
+      applicationErrorCode:
+        description: |
+          Код ошибки, к которому привел вызов метода
+        type: string
+        example: 'tooManyRequests'
+      message:
+        description: |
+          Человекочитаемое сообщение об ошибке
+        type: string
+        example: 'Ошибка отправки СМС-сообщения'
+    required:
+      - applicationErrorCode
+      - message

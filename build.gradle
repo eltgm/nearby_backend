@@ -107,3 +107,8 @@ compileJava {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+bootJar {
+    archiveFileName = 'nearby.jar'
+    archiveExtension = '.jar'
+}

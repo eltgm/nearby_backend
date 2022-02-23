@@ -29,18 +29,24 @@ paths:
           description: ID комнаты
           required: true
           type: string
-          format: uuid
         - name: userId
           in: query
           description: ID администратора
           required: true
           type: string
-          format: uuid
       responses:
         200:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
     delete:
       tags:
         - RoomDelete
@@ -54,15 +60,21 @@ paths:
           description: ID комнаты
           required: true
           type: string
-          format: uuid
         - name: userId
           in: query
           description: ID администратора
           required: true
           type: string
-          format: uuid
       responses:
         200:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'

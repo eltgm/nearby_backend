@@ -26,10 +26,8 @@ paths:
       tags:
         - CreateRoom
       operationId: createRoom
-      summary: Создание комнаты для дальнейшего подключения пользователей. На вход получаем уникальный идентификатор пользователя. В ответе отдаем случайно сгенерированный идентификатор комнаты
+      summary: Создание комнаты для дальнейшего подключения пользователей. На вход получаем уникальный идентификатор пользователя. В ответе отдаем сгенерированную комнату
       produces:
-        - application/json
-      consumes:
         - application/json
       parameters:
         - name: userId
@@ -42,6 +40,14 @@ paths:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
     get:
       tags:
         - GetRooms
@@ -55,7 +61,6 @@ paths:
           description: ID пользователя
           required: true
           type: string
-          format: uuid
       responses:
         200:
           description: OK
@@ -64,6 +69,15 @@ paths:
             minItems: 1
             items:
               $ref: 'common_model.yaml#/definitions/Room'
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+
   /user/room/{roomId}/enter:
     get:
       tags:
@@ -78,19 +92,26 @@ paths:
           description: ID комнаты
           required: true
           type: string
-          format: uuid
         - name: userId
           in: query
           description: ID пользователя
           required: true
           type: string
-          format: uuid
       responses:
         200:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
-  /user/{roomId}/leave:
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+
+  /user/room/{roomId}/leave:
     get:
       tags:
         - LeaveRoom
@@ -104,25 +125,34 @@ paths:
           description: ID комнаты
           required: true
           type: string
-          format: uuid
         - name: userId
           in: query
           description: ID пользователя
           required: true
           type: string
-          format: uuid
       responses:
         200:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
-  /user/{roomId}/update:
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+
+  /user/room/{roomId}/update:
     post:
       tags:
         - UpdateCoordinates
-      operationId: leaveRoom
-      summary: Выйти из существующей комнаты по переданному идентификатору
+      operationId: updateCoordinates
+      summary: Обновить координаты для указанного пользователя и вернуть актуальную информацию о комнате
       produces:
+        - application/json
+      consumes:
         - application/json
       parameters:
         - name: roomId
@@ -130,13 +160,11 @@ paths:
           description: ID комнаты
           required: true
           type: string
-          format: uuid
         - name: userId
           in: query
           description: ID пользователя
           required: true
           type: string
-          format: uuid
         - name: coordinates
           in: body
           description: Координаты пользователя
@@ -148,3 +176,11 @@ paths:
           description: OK
           schema:
             $ref: 'common_model.yaml#/definitions/Room'
+        400:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
+        404:
+          description: Некорректный запрос
+          schema:
+            $ref: 'common_model.yaml#/definitions/Error'
