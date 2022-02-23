@@ -19,6 +19,7 @@ public class AdminService {
     private final RoomRepository roomRepository;
 
     public Room activateRoom(ObjectId roomId, String userId) {
+        log.info("Start activating room with id {}", roomId);
         Room room = findRoom(roomId);
         validateIsUserAdmin(room, userId);
         if (room.isActive()) {
@@ -26,10 +27,12 @@ public class AdminService {
         }
         room.setActive(true);
 
+        log.info("Room {} activated", roomId);
         return roomRepository.save(room);
     }
 
     public Room deleteRoom(ObjectId roomId, String userId) {
+        log.info("Start deleting room with id {}", roomId);
         Room room = findRoom(roomId);
         if (!room.isActive()) {
             throw new RoomAlreadyDeactivatedException(roomId);
@@ -39,19 +42,23 @@ public class AdminService {
         room.setActive(false);
         room.setUsers(null);
 
+        log.info("Deleting room {} is done", roomId);
         return roomRepository.save(room);
     }
 
     private Room findRoom(ObjectId roomId) {
+        log.info("Start finding room with id {}", roomId);
         Optional<Room> roomOptional = roomRepository.findById(roomId);
         if (roomOptional.isEmpty()) {
             throw new RoomNotExistException(roomId);
         }
 
+        log.info("Room found {}", roomId);
         return roomOptional.get();
     }
 
     private void validateIsUserAdmin(Room room, String userId) {
+        log.info("Start checking user permissions {}", userId);
         List<User> users = room.getUsers();
         Optional<User> adminUserOptional = users.stream()
                 .filter(user -> user.getId().equals(userId))
