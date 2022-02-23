@@ -7,7 +7,7 @@ services:
       context: .
     privileged: true
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - mongo
 
@@ -15,4 +15,4 @@ services:
     container_name: nearby_db
     image: "mongo"
     ports:
-      - 27017:27017
+      - "27017:27017"

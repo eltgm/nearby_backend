@@ -12,11 +12,14 @@ import java.util.List;
 
 @Mapper
 public interface RoomMapper {
+    @Mapping(target = "isActive", source = "active")
     ru.vsultanyarov.nearby_backend.mods.dto.Room domainRoomToDto(Room room);
 
+    @Mapping(target = "isActive", source = "active")
     List<ru.vsultanyarov.nearby_backend.mods.dto.Room> domainRoomsToDto(List<Room> rooms);
 
     @Mapping(target = "lastCoordinates", source = "coordinates")
+    @Mapping(target = "isAdmin", source = "admin")
     ru.vsultanyarov.nearby_backend.mods.dto.User userToUser(User user);
 
     Coordinates dtoCoordinatesToDomain(ru.vsultanyarov.nearby_backend.mods.dto.Coordinates coordinates);
