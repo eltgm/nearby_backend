@@ -18,6 +18,6 @@ import java.util.List;
 public class Room {
     @Id
     private ObjectId id;
-    private Boolean isActive;
+    private boolean isActive;
     private List<User> users;
 }
