@@ -46,6 +46,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     //Swagger Codegen
     swaggerCodegenV2 'io.swagger:swagger-codegen-cli:2.4.9'
